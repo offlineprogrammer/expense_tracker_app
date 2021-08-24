@@ -1,0 +1,30 @@
+type Category @model @auth(rules: [{allow: public}])
+@key(name: "byUser", fields: ["userID"])  {
+  id: ID!
+  categoryname: String!
+  userID: ID!
+  Expenses: [Expense] @connection(keyName: "byCategory", fields: ["id"])
+}
+
+type Expense @model @auth(rules: [{allow: public}]) 
+@key(name: "byUser", fields: ["userID"]) 
+@key(name: "byCategory", fields: ["categoryID"])
+{
+  id: ID!
+  expensename: String!
+  expensevalue: Float!
+  expenseimagekey: String
+  userID: ID!
+  categoryID: ID!
+}
+
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  displayname: String!
+  username: AWSEmail!
+  createdAt: AWSDateTime
+  avatarkey: String
+  Expenses: [Expense] @connection(keyName: "byUser", fields: ["id"])
+}
+ 
