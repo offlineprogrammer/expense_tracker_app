@@ -18,8 +18,8 @@ class AmplifyService {
     Amplify.addPlugins([
       authPlugin,
       datastorePlugin,
-      //  AmplifyAnalyticsPinpoint(),
-      //  storage,
+      AmplifyAnalyticsPinpoint(),
+      storage,
       AmplifyAPI()
     ]);
 

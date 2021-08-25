@@ -53,5 +53,17 @@
         ]
       }
     }
+  },
+  "storage": {
+    "s30c4fc545": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
+  },
+  "analytics": {
+    "expensetrackerapp": {
+      "service": "Pinpoint",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }

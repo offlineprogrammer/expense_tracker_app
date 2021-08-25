@@ -1,6 +1,6 @@
 {
     "identityPoolName": "testAuthIdentityPool",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "expens98b7ff98",
     "userPoolName": "expensetrackerapp",
     "autoVerifiedAttributes": [

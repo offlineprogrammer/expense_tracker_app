@@ -1,0 +1,21 @@
+{
+    "appName": "expensetrackerapp",
+    "roleName": "pinpointLambdaRole5d5fd65a",
+    "cloudformationPolicyName": "cloudformationPolicy5d5fd65a",
+    "cloudWatchPolicyName": "cloudWatchPolicy5d5fd65a",
+    "pinpointPolicyName": "pinpointPolicy5d5fd65a",
+    "authPolicyName": "pinpoint_amplify_5d5fd65a",
+    "unauthPolicyName": "pinpoint_amplify_5d5fd65a",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}

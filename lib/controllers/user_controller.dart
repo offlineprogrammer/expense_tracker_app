@@ -54,7 +54,7 @@ class UserController extends GetxController {
 
     try {
       isLoading.value = true;
-      final pickedFile = await picker.getImage(source: ImageSource.gallery);
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
         _image = File(pickedFile.path);
 
@@ -67,6 +67,7 @@ class UserController extends GetxController {
         metadata['desc'] = 'A test file';
         S3UploadFileOptions options = S3UploadFileOptions(
             accessLevel: StorageAccessLevel.guest, metadata: metadata);
+        print(_image.toString());
         UploadFileResult result = await Amplify.Storage.uploadFile(
             key: userImageKey, local: _image, options: options);
         print('uploaded');
