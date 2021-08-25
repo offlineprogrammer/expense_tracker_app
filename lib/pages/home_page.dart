@@ -1,5 +1,6 @@
 import 'package:expense_tracker_app/controllers/auth_controller.dart';
 import 'package:expense_tracker_app/controllers/user_controller.dart';
+import 'package:expense_tracker_app/widgets/add_expense_alert.dart';
 import 'package:expense_tracker_app/widgets/home_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,25 +36,7 @@ class HomePage extends GetWidget<UserController> {
         drawer: const HomeDrawer(),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Get.dialog(AlertDialog(
-              title: Text('Add Todo here'),
-              content: TextFormField(
-                //controller: _todocontroller.todoTitleController,
-                decoration: InputDecoration(hintText: "Title"),
-              ),
-              actions: [
-                TextButton(
-                  child: Text('OK'),
-                  onPressed: () async {
-                    // if (_todocontroller.todoTitleController.text != "") {
-                    //   await _todocontroller.addTodo();
-                    //   _todocontroller.todoTitleController.clear();
-                    // }
-                    Get.back();
-                  },
-                ),
-              ],
-            ));
+            Get.dialog(AddExpenseAlert());
           },
           child: Icon(Icons.add),
         ),

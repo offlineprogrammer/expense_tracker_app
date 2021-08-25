@@ -1,5 +1,6 @@
 import 'package:amplify_flutter/amplify.dart';
 import 'package:expense_tracker_app/models/Category.dart';
+import 'package:expense_tracker_app/models/Expense.dart';
 import 'package:expense_tracker_app/models/User.dart';
 
 class DataStoreService {
@@ -36,6 +37,37 @@ class DataStoreService {
       List<Category> categories = await Amplify.DataStore.query(
           Category.classType,
           where: Category.USERID.eq(userId));
+      if (categories.length > 0) {
+        return categories;
+      } else
+        return null;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<void> saveExpense(Expense _category) async {
+    try {
+      await Amplify.DataStore.save(_category);
+    } catch (e) {
+      print(e.toString());
+      throw e;
+    }
+  }
+
+  Future<void> removeExpense(Expense _category) async {
+    try {
+      await Amplify.DataStore.delete(_category);
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<List<Expense>?> getExpenses(String userId) async {
+    try {
+      List<Expense> categories = await Amplify.DataStore.query(
+          Expense.classType,
+          where: Expense.USERID.eq(userId));
       if (categories.length > 0) {
         return categories;
       } else

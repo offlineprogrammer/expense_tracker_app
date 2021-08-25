@@ -1,4 +1,6 @@
 import 'package:expense_tracker_app/controllers/auth_controller.dart';
+import 'package:expense_tracker_app/controllers/category_controller.dart';
+import 'package:expense_tracker_app/controllers/expense_controller.dart';
 import 'package:expense_tracker_app/controllers/user_controller.dart';
 import 'package:get/get.dart';
 
@@ -8,5 +10,7 @@ class HomeBindings extends Bindings {
     Get.put<AuthController>(AuthController(), permanent: true);
 
     Get.put<UserController>(UserController(), permanent: true);
+    Get.put<ExpenseController>(ExpenseController(), permanent: true);
+    Get.put<CategoryController>(CategoryController(), permanent: true);
   }
 }

@@ -26,7 +26,9 @@ class HomeDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.home),
             title: const Text('Expenses'),
-            onTap: () {},
+            onTap: () {
+              Get.toNamed("/home");
+            },
           ),
           ListTile(
             leading: const Icon(Icons.category),
