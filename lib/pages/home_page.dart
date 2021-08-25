@@ -1,12 +1,14 @@
 import 'package:expense_tracker_app/controllers/auth_controller.dart';
+import 'package:expense_tracker_app/controllers/expense_controller.dart';
 import 'package:expense_tracker_app/controllers/user_controller.dart';
 import 'package:expense_tracker_app/widgets/add_expense_alert.dart';
+import 'package:expense_tracker_app/widgets/expense_card.dart';
 import 'package:expense_tracker_app/widgets/home_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomePage extends GetWidget<UserController> {
-  AuthController _authcontroller = Get.find();
+  ExpenseController _expenseController = Get.find();
 
   get kTransparentImage => null;
   @override
@@ -14,24 +16,10 @@ class HomePage extends GetWidget<UserController> {
     return Scaffold(
         backgroundColor: Color(0xffE1E5E4),
         appBar: AppBar(
-          title: GetX<UserController>(
-            initState: (_) async {
-              await Get.find<UserController>().getCurrUser();
-            },
-            builder: (_) {
-              return Text(controller.user?.username ?? '',
-                  style: TextStyle(fontSize: 12));
-            },
+          title: Text(
+            'Expenses',
           ),
           centerTitle: true,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.logout),
-              onPressed: () {
-                _authcontroller.signOut();
-              },
-            ),
-          ],
         ),
         drawer: const HomeDrawer(),
         floatingActionButton: FloatingActionButton(
@@ -86,16 +74,17 @@ class HomePage extends GetWidget<UserController> {
               SizedBox(
                 height: 8,
               ),
-              // Obx(
-              //   () => Expanded(
-              //     child: ListView.builder(
-              //       itemCount: _todocontroller.todoList.length,
-              //       itemBuilder: (_, index) {
-              //         return TodoCard(todo: _todocontroller.todoList[index]);
-              //       },
-              //     ),
-              //   ),
-              // ),
+              Obx(
+                () => Expanded(
+                  child: ListView.builder(
+                    itemCount: _expenseController.expensesList.length,
+                    itemBuilder: (_, index) {
+                      return ExpenseCard(
+                          expense: _expenseController.expensesList[index]);
+                    },
+                  ),
+                ),
+              ),
             ],
           ),
         ));

@@ -45,7 +45,9 @@ class HomeDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.settings),
             title: const Text('Settings'),
-            onTap: () {},
+            onTap: () {
+              Get.toNamed("/settings");
+            },
           ),
           ListTile(
             leading: const Icon(Icons.exit_to_app),

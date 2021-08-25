@@ -6,6 +6,7 @@ import 'package:amplify_storage_s3/amplify_storage_s3.dart';
 import 'package:expense_tracker_app/models/User.dart';
 import 'package:expense_tracker_app/services/auth_service.dart';
 import 'package:expense_tracker_app/services/datastore_service.dart';
+import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,6 +19,7 @@ class UserController extends GetxController {
   Rxn<User> currentUser = Rxn<User>();
   RxBool isLoading = false.obs;
   RxString imageUrl = ''.obs;
+  final TextEditingController displaynameController = TextEditingController();
 
   User? get user => currentUser.value;
 
@@ -36,6 +38,14 @@ class UserController extends GetxController {
     AuthUser authUser = await _authService.getCurrentUser();
     currentUser.value = await _datastoreService.getUser(authUser.userId);
     print(currentUser.value);
+  }
+
+  Future<void> updateDisplayName() async {
+    currentUser.value =
+        currentUser.value!.copyWith(displayname: displaynameController.text);
+    await _datastoreService.saveUser(currentUser.value!);
+    displaynameController.clear();
+    //await _analyticsService.recordEvent('update_monster');
   }
 
   Future<void> setUserImage() async {

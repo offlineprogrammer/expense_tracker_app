@@ -3,6 +3,7 @@ import 'package:expense_tracker_app/controllers/bindings/homepage_bindings.dart'
 import 'package:expense_tracker_app/pages/categories_page.dart';
 import 'package:expense_tracker_app/pages/email_sign_in_page.dart';
 import 'package:expense_tracker_app/pages/home_page.dart';
+import 'package:expense_tracker_app/pages/settings_page.dart';
 import 'package:expense_tracker_app/pages/sign_in_page.dart';
 import 'package:get/get.dart';
 
@@ -21,6 +22,11 @@ class AppRoutes {
       name: '/categories',
       page: () => CategoriesPage(),
       binding: CategoriesBindings(),
+    ),
+    GetPage(
+      name: '/settings',
+      page: () => SettingsPage(),
+      binding: HomeBindings(),
     ),
   ];
 }

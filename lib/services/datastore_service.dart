@@ -7,7 +7,7 @@ class DataStoreService {
   Future<void> saveUser(User user) async {
     try {
       print('DataStore Save');
-      await Amplify.DataStore.clear();
+      //await Amplify.DataStore.clear();
       await Amplify.DataStore.save(user);
     } catch (e) {
       print(e.toString());
