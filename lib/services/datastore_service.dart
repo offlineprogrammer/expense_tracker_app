@@ -65,13 +65,14 @@ class DataStoreService {
 
   Future<List<Expense>?> getExpenses(String userId) async {
     try {
-      List<Expense> categories = await Amplify.DataStore.query(
-          Expense.classType,
+      List<Expense> expenses = await Amplify.DataStore.query(Expense.classType,
           where: Expense.USERID.eq(userId));
-      if (categories.length > 0) {
-        return categories;
+      if (expenses.length > 0) {
+        print(expenses);
+        return expenses;
       } else
-        return null;
+        print('nothing');
+      return null;
     } catch (e) {
       throw e;
     }

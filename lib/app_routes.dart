@@ -21,7 +21,7 @@ class AppRoutes {
     GetPage(
       name: '/categories',
       page: () => CategoriesPage(),
-      binding: CategoriesBindings(),
+      binding: HomeBindings(),
     ),
     GetPage(
       name: '/settings',

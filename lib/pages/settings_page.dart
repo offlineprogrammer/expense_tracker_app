@@ -64,10 +64,12 @@ class SettingsPage extends GetWidget<UserController> {
                   ),
                 ),
                 SizedBox(height: 20),
-                Text(
-                  controller.currentUser.value!.username,
-                  style: Theme.of(context).textTheme.bodyText1,
-                  textAlign: TextAlign.center,
+                Obx(
+                  () => Text(
+                    controller.currentUser!.value!.username,
+                    style: Theme.of(context).textTheme.bodyText1,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 SizedBox(height: 20),
                 Divider(color: Colors.black),
@@ -97,12 +99,15 @@ class SettingsPage extends GetWidget<UserController> {
                   ),
                 ),
                 SizedBox(
-                  height: 8.0,
+                  height: 20.0,
                 ),
-                ElevatedButton(
-                  onPressed: controller.updateDisplayName,
-                  child: Text(
-                    'Save',
+                SizedBox(
+                  width: 200,
+                  child: ElevatedButton(
+                    onPressed: controller.updateDisplayName,
+                    child: Text(
+                      'Save',
+                    ),
                   ),
                 ),
                 SizedBox(height: 20),

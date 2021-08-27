@@ -1,5 +1,6 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:expense_tracker_app/models/Category.dart';
+import 'package:expense_tracker_app/services/analytics_service.dart';
 import 'package:expense_tracker_app/services/auth_service.dart';
 import 'package:expense_tracker_app/services/datastore_service.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ class CategoryController extends GetxController {
   static CategoryController to = Get.find();
   DataStoreService _dataStoreService = DataStoreService();
   AuthService _authService = AuthService();
+  AnalyticsService _analyticsService = AnalyticsService();
   RxBool isLoading = false.obs;
 
   final TextEditingController categoryNameController = TextEditingController();
@@ -41,6 +43,7 @@ class CategoryController extends GetxController {
       await _dataStoreService.saveCategory(_category);
       categoryNameController.clear();
       categoriesList.add(_category);
+      await _analyticsService.recordEvent('add_category');
     } catch (e) {} finally {
       isLoading.value = false;
     }
@@ -48,7 +51,7 @@ class CategoryController extends GetxController {
 
   Future<void> removeCategory(Category category) async {
     await _dataStoreService.removeCategory(category);
-
     categoriesList.remove(category);
+    await _analyticsService.recordEvent('remove_category');
   }
 }

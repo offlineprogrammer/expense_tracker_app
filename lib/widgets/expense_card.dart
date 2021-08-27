@@ -42,13 +42,18 @@ class ExpenseCard extends StatelessWidget {
   Card _buildCard(ExpenseController expenseController) {
     CategoryController _categoryController = Get.find();
     return Card(
-        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: Colors.black12, width: 1),
+          borderRadius: BorderRadius.circular(1),
+        ),
         child: ListTile(
+          dense: true,
           title: Text(
             expense.expensename,
             style: TextStyle(
               color: Colors.black,
-              fontSize: 15,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -61,17 +66,17 @@ class ExpenseCard extends StatelessWidget {
                     .categoryname,
                 style: TextStyle(
                   color: Colors.grey,
-                  fontSize: 10,
+                  fontSize: 12,
                 ),
               ),
             ],
           ),
           trailing: Wrap(children: [
             Text(
-              '\$' + expense.expensevalue.toString(),
+              '-\$' + expense.expensevalue.toString(),
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 15,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),

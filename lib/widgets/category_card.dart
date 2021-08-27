@@ -39,13 +39,19 @@ class CategoryCard extends StatelessWidget {
 
   Card _buildCard(CategoryController categoryController) {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: Colors.black12, width: 1),
+        borderRadius: BorderRadius.circular(1),
+      ),
       child: ListTile(
+        dense: true,
         title: Text(
           category.categoryname,
+          textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.black,
-            fontSize: 15,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),

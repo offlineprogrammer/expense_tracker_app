@@ -4,6 +4,7 @@ import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify.dart';
 import 'package:amplify_storage_s3/amplify_storage_s3.dart';
 import 'package:expense_tracker_app/models/User.dart';
+import 'package:expense_tracker_app/services/analytics_service.dart';
 import 'package:expense_tracker_app/services/auth_service.dart';
 import 'package:expense_tracker_app/services/datastore_service.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class UserController extends GetxController {
   static UserController to = Get.find();
   DataStoreService _datastoreService = DataStoreService();
   AuthService _authService = AuthService();
+  AnalyticsService _analyticsService = AnalyticsService();
   Rxn<User> currentUser = Rxn<User>();
   RxBool isLoading = false.obs;
   RxString imageUrl = ''.obs;
@@ -45,7 +47,7 @@ class UserController extends GetxController {
         currentUser.value!.copyWith(displayname: displaynameController.text);
     await _datastoreService.saveUser(currentUser.value!);
     displaynameController.clear();
-    //await _analyticsService.recordEvent('update_monster');
+    await _analyticsService.recordEvent('update_displayname');
   }
 
   Future<void> setUserImage() async {
@@ -57,33 +59,23 @@ class UserController extends GetxController {
       final pickedFile = await picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
         _image = File(pickedFile.path);
-
         _image.existsSync();
         final userImageKey = currentUser.value!.id + Uuid().v1() + '.png';
-        print(userImageKey);
-
         Map<String, String> metadata = <String, String>{};
         metadata['name'] = currentUser.value!.id;
         metadata['desc'] = 'A test file';
         S3UploadFileOptions options = S3UploadFileOptions(
             accessLevel: StorageAccessLevel.guest, metadata: metadata);
-        print(_image.toString());
         UploadFileResult result = await Amplify.Storage.uploadFile(
             key: userImageKey, local: _image, options: options);
-        print('uploaded');
         GetUrlOptions _getUrlOptions = GetUrlOptions(expires: 60000);
         GetUrlResult resultUrl = await Amplify.Storage.getUrl(
             key: userImageKey, options: _getUrlOptions);
-        print('URL: ' + resultUrl.url);
-
-        // currentUser.value = currentUser.value!
-        //     .copyWith(imageKey: userImageKey, imageUrl: resultUrl.url);
-
-        print(currentUser.value);
-
+        currentUser.value =
+            currentUser.value!.copyWith(avatarkey: userImageKey);
         imageUrl.value = resultUrl.url;
-
         await _datastoreService.saveUser(currentUser.value!);
+        await _analyticsService.recordEvent('update_useravatar');
       } else {
         return null;
       }

@@ -1,4 +1,5 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:expense_tracker_app/services/analytics_service.dart';
 import 'package:expense_tracker_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,7 @@ enum EmailSignInFormType { signIn, register, confirm }
 class AuthController extends GetxController {
   static AuthController to = Get.find();
   AuthService _authService = AuthService();
+  AnalyticsService _analyticsService = AnalyticsService();
   Rx<EmailSignInFormType> emailformType = EmailSignInFormType.signIn.obs;
   RxBool isLoading = false.obs;
   RxBool isSignedIn = false.obs;
@@ -64,12 +66,14 @@ class AuthController extends GetxController {
         case EmailSignInFormType.signIn:
           isSignedIn.value = await _authService.signInWithEmailAndPassword(
               emailController.text, passwordController.text);
+          await _analyticsService.recordEvent('email_signIn');
           break;
         case EmailSignInFormType.register:
           final isSignedUp = await _authService.registerWithEmailAndPassword(
               emailController.text, passwordController.text);
           if (!isSignedUp) {
             emailformType.value = EmailSignInFormType.confirm;
+            await _analyticsService.recordEvent('email_register');
           }
           break;
         case EmailSignInFormType.confirm:
@@ -77,6 +81,7 @@ class AuthController extends GetxController {
               emailController.text,
               passwordController.text,
               codeController.text))!;
+          await _analyticsService.recordEvent('email_confirm');
       }
     } catch (e) {
       rethrow;
@@ -107,13 +112,14 @@ class AuthController extends GetxController {
     if (!isSignedIn) {
       Get.offAllNamed("/signin");
     } else {
-      Get.offAllNamed("/home");
+      Get.offAllNamed("/settings");
     }
   }
 
   void signIn(AuthProvider authProvider) async {
     try {
       await _authService.signIn(authProvider);
+      await _analyticsService.recordEvent('authProvider_signIn');
       isSignedIn.value = true;
       //_setuplistener();
     } catch (e) {

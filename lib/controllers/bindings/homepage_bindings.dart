@@ -10,7 +10,7 @@ class HomeBindings extends Bindings {
     Get.put<AuthController>(AuthController(), permanent: true);
 
     Get.put<UserController>(UserController(), permanent: true);
-    Get.put<ExpenseController>(ExpenseController(), permanent: true);
     Get.put<CategoryController>(CategoryController(), permanent: true);
+    Get.put<ExpenseController>(ExpenseController(), permanent: true);
   }
 }

@@ -51,10 +51,10 @@ class CategoriesPage extends GetWidget<CategoryController> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(
-                height: 8,
+                height: 20,
               ),
               Text(
-                "Your Expenses",
+                "All Categories",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20,
@@ -62,7 +62,7 @@ class CategoriesPage extends GetWidget<CategoryController> {
                 ),
               ),
               SizedBox(
-                height: 8,
+                height: 20,
               ),
               Obx(
                 () => Expanded(
